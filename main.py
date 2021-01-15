@@ -3,11 +3,11 @@ name: Colton Gering
 email: geringcolton@gmail.com
 API to compare images
 '''
-from typing import Optional
 from fastapi import FastAPI
-from flask import Flask,request
-from PIL import Image,ImageChops,ImageStat
+from PIL import Image
 import requests
+import imgcompare
+
 import json
 appkey = "kmrhn74zgzcq4nqb"
 
@@ -27,23 +27,11 @@ def handleComparison(url1:str,url2:str,key:str):
     
 def compareImages(url1:str,url2:str):
     i1 = Image.open(requests.get(url1,stream=True).raw)
-
     i2 = Image.open(requests.get(url2, stream=True).raw)
-    print(i1,i2)
-    print(i1.getbands(),i2.getbands())
-   # return ImageState.StatImageChops.difference(i1,i2))
-    #difference as image
-    print(i1,i2)
-    difference = ImageChops.difference(i1,i2)
+    if i1.size != i2.size or i1.getbands() != i2.getbands():
+        return 'images not compatible'
 
-    '''
-    #make the image a stat object
-    difference_stat = ImageStat.Stat(difference)
-    #get list of average for each band
-    avg_difference = difference_stat.mean
-    #calculate averages to a single percentage
-    res = round(sum(avg_difference) / len(avg_difference), 2)
-        return str(res) + "%"
+    return imgcompare.image_diff_percent(i1,i2)
 
-    '''
-    return difference
+
+
