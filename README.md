@@ -1,4 +1,4 @@
-An api to compare images with fastAPI.
+An api to compare images with fastAPI. Calculates a percentage similarity and a merged difference image.
 
 use the command: uvicorn main:app --reload  
 to start the program.
