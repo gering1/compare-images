@@ -15,7 +15,7 @@ app = FastAPI()
 @app.post("/compare")
 def handleComparison(url1:str,url2:str,key:str):
     '''
-    check if
+    check if api is correct and accept query params
     :param url1: first image url
     :param url2: second image url
     :param key: api key
@@ -32,7 +32,6 @@ def handleComparison(url1:str,url2:str,key:str):
     
 def compareImages(url1:str,url2:str):
     '''
-
     :param url1: first image url
     :param url2: second image url
     :return: image similarity percentage
